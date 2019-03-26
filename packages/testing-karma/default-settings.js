@@ -48,6 +48,22 @@ module.exports = config => ({
   // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
   logLevel: config.LOG_INFO,
 
+  /** Some errors come in JSON format with a message property. */
+  formatError(error) {
+    try {
+      if (typeof error !== 'string') {
+        return error;
+      }
+      const parsed = JSON.parse(error);
+      if (typeof parsed !== 'object' || !parsed.message) {
+        return error;
+      }
+      return parsed.message;
+    } catch (_) {
+      return error;
+    }
+  },
+
   // ## code coverage config
   coverageIstanbulReporter: {
     reports: ['html', 'lcovonly', 'text-summary'],
