@@ -1,5 +1,8 @@
 const path = require('path');
 
+const coverage = process.argv.find(arg => arg.includes('coverage'));
+const legacy = process.argv.find(arg => arg.includes('legacy'));
+
 /**
  * Creates a basic karma configuration file.
  *
@@ -28,10 +31,16 @@ module.exports = config => ({
     '**/*.spec.js': ['webpack', 'sourcemap'],
   },
 
-  reporters: ['mocha', 'coverage-istanbul'],
+  reporters: coverage ? ['mocha', 'coverage-istanbul'] : ['mocha'],
 
   mochaReporter: {
     showDiff: true,
+  },
+
+  client: {
+    mocha: {
+      reporter: 'html',
+    },
   },
 
   colors: true,
@@ -57,10 +66,22 @@ module.exports = config => ({
 
   webpack: {
     devtool: 'inline-source-map',
-    mode: 'development',
+
+    resolve: {
+      mainFields: [
+        // current leading de-facto standard - see https://github.com/rollup/rollup/wiki/pkg.module
+        'module',
+        // previous de-facto standard, superceded by `module`, but still in use by some packages
+        'jsnext:main',
+        // standard package.json fields
+        'browser',
+        'main',
+      ],
+    },
+
     module: {
       rules: [
-        {
+        coverage && {
           test: /\.js$/,
           loader: 'istanbul-instrumenter-loader',
           enforce: 'post',
@@ -72,10 +93,29 @@ module.exports = config => ({
         },
 
         {
-          test: /\.js$/,
-          loader: require.resolve('@open-wc/webpack-import-meta-loader'),
+          test: /\.js$|\.ts$/,
+          use: {
+            loader: 'babel-loader',
+
+            options: {
+              plugins: [
+                '@babel/plugin-syntax-dynamic-import',
+                '@babel/plugin-syntax-import-meta',
+                // webpack does not support import.meta.url yet, so we rewrite them in babel
+                ['bundled-import-meta', { importStyle: 'baseURI' }],
+              ].filter(_ => !!_),
+
+              presets: [
+                [
+                  '@babel/preset-env',
+                  // hardcode IE11 for legacy build, otherwise use browserslist configuration
+                  { targets: legacy ? 'IE 11' : undefined },
+                ],
+              ],
+            },
+          },
         },
-      ],
+      ].filter(_ => !!_),
     },
   },
 
