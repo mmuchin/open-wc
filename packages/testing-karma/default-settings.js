@@ -23,7 +23,7 @@ module.exports = config => ({
   middleware: ['static'],
 
   static: {
-    path: path.join(__dirname, ''),
+    path: path.join(process.cwd(), ''),
   },
 
   preprocessors: {
