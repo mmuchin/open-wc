@@ -11,6 +11,20 @@ const legacy = process.argv.find(arg => arg.includes('legacy'));
 module.exports = config => ({
   browsers: ['ChromeHeadlessNoSandbox'],
 
+  files: legacy
+    ? [
+        { pattern: require.resolve('@babel/polyfill/dist/polyfill.min.js'), watched: false },
+        {
+          pattern: require.resolve('@webcomponents/webcomponentsjs/custom-elements-es5-adapter'),
+          watched: false,
+        },
+        {
+          pattern: require.resolve('@webcomponents/webcomponentsjs/webcomponents-bundle'),
+          watched: false,
+        },
+      ]
+    : undefined,
+
   customLaunchers: {
     ChromeHeadlessNoSandbox: {
       base: 'ChromeHeadless',

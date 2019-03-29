@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const merge = require('webpack-merge');
-const defaultSettings = require('../default-settings.js');
+const defaultConfig = require('../default-config.js');
 
 module.exports = config => {
   config.set(
-    merge(defaultSettings(config), {
+    merge(defaultConfig(config), {
       files: [
         // allows running single tests with the --grep flag
         config.grep ? config.grep : 'test/**/*.test.js',

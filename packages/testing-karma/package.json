@@ -16,8 +16,8 @@
   "scripts": {
     "test": "karma start demo/karma.conf.js --coverage",
     "test:debug": "karma start demo/karma.conf.js --auto-watch=true --single-run=false",
-    "test:es5": "karma start demo/karma.conf.js --legacy",
-    "test:es5:bs": "karma start demo/karma.es5.bs.config.js",
+    "test:legacy": "karma start demo/karma.conf.js --legacy --auto-watch=true --single-run=false",
+    "test:bs": "karma start demo/karma.bs.conf.js --legacy",
     "prepublishOnly": "../../scripts/insert-header.js"
   },
   "files": [
@@ -28,7 +28,6 @@
     "@babel/plugin-syntax-import-meta": "^7.2.0",
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
-    "@open-wc/webpack-import-meta-loader": "^0.2.0",
     "@webcomponents/webcomponentsjs": "^2.2.0",
     "babel-loader": "^8.0.0",
     "istanbul-instrumenter-loader": "^3.0.0",
