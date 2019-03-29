@@ -156,6 +156,16 @@ npm i --save @open-wc/testing-karma webpack-merge karma
     ```
   </details>
 
+- Create a `.browserslistrc` file containing your supported browser set. Note that if you need to support IE11, we don't recommend adding it here. Pass the `legacy` flag when running tests on IE11. For example:
+```
+last 2 Chrome major versions
+last 2 ChromeAndroid major versions
+last 2 Edge major versions
+last 2 Firefox major versions
+last 2 Safari major versions
+last 2 iOS major versions
+```
+
 - If you only want to run tests on modern browsers, add these scripts:
 ```json
 "scripts": {
