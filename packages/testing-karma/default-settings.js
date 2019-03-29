@@ -81,7 +81,7 @@ module.exports = config => ({
   },
 
   webpack: {
-    devtool: 'inline-source-map',
+    devtool: 'inline-cheap-module-source-map',
 
     resolve: {
       mainFields: [
