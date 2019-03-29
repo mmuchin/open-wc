@@ -160,7 +160,7 @@ npm i --save @open-wc/testing-karma webpack-merge karma
 ```json
 "scripts": {
   "test": "karma start --coverage",
-  "test:watch": "karma start --auto-watch=true --single-run=false",
+  "test:watch": "karma start --auto-watch=true --single-run=false"
 },
 ```
 - If you want to run tests on legacy browsers as well, add these scripts:
@@ -169,7 +169,7 @@ npm i --save @open-wc/testing-karma webpack-merge karma
   "test": "karma start --coverage",
   "test:watch": "karma start --auto-watch=true --single-run=false",
   "test:legacy": "karma start --legacy --coverage",
-  "test:legacy:watch": "karma start --legacy --auto-watch=true --single-run=false",
+  "test:legacy:watch": "karma start --legacy --auto-watch=true --single-run=false"
 },
 ```
 - Run via `npm run <command>`
